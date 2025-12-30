@@ -37,5 +37,24 @@
             {% endfor %}
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const bookCards = document.querySelectorAll('.book-card');
+            bookCards.forEach(card => {
+                const link = card.querySelector('a.btn');
+                // Extract book ID from the default href: /read/{book_id}/0
+                // We can split by '/' and get the 3rd component (index 2)
+                const parts = link.getAttribute('href').split('/');
+                const bookId = parts[2];
+                
+                const savedProgress = localStorage.getItem("reader3_progress_" + bookId);
+                
+                if (savedProgress) {
+                    link.href = "/read/" + bookId + "/" + savedProgress;
+                    link.textContent = "Continue Reading";
+                }
+            });
+        });
+    </script>
 </body>
 </html>
